@@ -271,19 +271,19 @@ elif page == "📊 Model Performance":
         'AUC-ROC':   [0.731, 0.779, 0.792, 0.813],
     }
     df_m = pd.DataFrame(metrics_data).set_index('Model')
-    st.dataframe(df_m.style.highlight_max(axis=0, color='#d4edda').format('{:.3f}'),
+    st.dataframe(df_m.style.highlight_max(axis=0, color='#2CAB4A').format('{:.3f}'),
                  use_container_width=True)
 
     st.subheader("ROC Curves")
-    st.image("fig3_roc_curves.png", use_column_width=True,
+    st.image("Diagrams/fig3_roc_curves.png", use_column_width=True,
              caption="ROC curves — Stacking Ensemble achieves highest AUC=0.813")
 
     st.subheader("Confusion Matrix (Stacking Ensemble — With vs Without SMOTE)")
-    st.image("fig5_confusion_matrices.png", use_column_width=True,
+    st.image("Diagrams/fig5_confusion_matrices.png", use_column_width=True,
              caption="SMOTE significantly improves recall for the minority (default) class")
 
     st.subheader("SHAP Feature Importance")
-    st.image("fig6_shap_summary.png", use_column_width=True,
+    st.image("Diagrams/fig6_shap_summary.png", use_column_width=True,
              caption="PAY_0 dominates — most recent repayment status is the strongest predictor")
 
     st.subheader("Risk Tier Distribution (Test Set)")
@@ -291,7 +291,7 @@ elif page == "📊 Model Performance":
              "High Risk (45-70%)": 1247, "Critical Risk (>70%)": 503}
     fig_tier, ax = plt.subplots(figsize=(8, 4))
     bars = ax.bar(tiers.keys(), tiers.values(),
-                  color=['#28a745','#ffc107','#dc3545','#721c24'], edgecolor='white')
+                  color=['#2CAB4A','#FFCA22','#FD384A','#9C000F'], edgecolor='white')
     ax.set_title('Predicted Risk Tier Distribution (Test Set, n=9,500)', fontweight='bold')
     ax.set_ylabel('Count')
     for bar, val in zip(bars, tiers.values()):
