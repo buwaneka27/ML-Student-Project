@@ -124,8 +124,7 @@ def gauge_chart(prob: float):
 # ─────────────────────────────────────────────────────────────────────────────
 st.sidebar.image("https://img.icons8.com/color/96/bank-card-back-side.png", width=80)
 st.sidebar.title("Credit Risk Predictor")
-st.sidebar.markdown("**Model:** Calibrated Stacking Ensemble")
-st.sidebar.markdown("**By:** Buwaneka Ranatunge")
+st.sidebar.markdown("**Model:** Calibrated Stacking Ensemble \n **By:** Buwaneka Ranatunge")
 st.sidebar.divider()
 
 page = st.sidebar.radio("Navigation", ["🔮 Predict", "📊 Model Performance", "ℹ️ About"])
