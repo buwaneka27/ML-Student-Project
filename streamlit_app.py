@@ -114,7 +114,7 @@ def gauge_chart(prob: float):
     # Needle
     angle = np.pi * prob
     ax.annotate("", xy=(angle, 0.85), xytext=(0, 0),
-                 arrowprops=dict(arrowstyle="-|>", color="black", lw=2))
+                 arrowprops=dict(arrowstyle="-|>", color="white", lw=2))
 
     ax.set_ylim(0, 1)
     ax.set_axis_off()
