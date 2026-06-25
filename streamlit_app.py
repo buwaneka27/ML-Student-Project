@@ -95,27 +95,30 @@ def build_feature_vector(inputs: dict) -> pd.DataFrame:
     return pd.DataFrame([{c: d[c] for c in cols}])
 
 def gauge_chart(prob: float):
-    fig, ax = plt.subplots(figsize=(3, 1.6), subplot_kw=dict(polar=True))
+    """Draw a simple gauge chart for the default probability."""
+    fig, ax = plt.subplots(figsize=(4, 2.2), subplot_kw=dict(polar=True))
     ax.set_theta_zero_location("W")
     ax.set_theta_direction(-1)
 
+    # Background segments
     segments = [
-        (0,          np.pi*0.50, '#2CAB4A'), # Low
-        (np.pi*0.50, np.pi*0.75, '#FFCA22'), # Medium
-        (np.pi*0.75, np.pi*0.90, '#FD384A'), # High
-        (np.pi*0.90, np.pi,      '#9C000F'), # Very High
+        (0, np.pi*0.5,  '#d4edda'),
+        (np.pi*0.5, np.pi*0.75, '#fff3cd'),
+        (np.pi*0.75, np.pi*0.9, '#f8d7da'),
+        (np.pi*0.9, np.pi,     '#721c24'),
     ]
     for start, end, col in segments:
         theta = np.linspace(start, end, 50)
-        ax.fill_between(theta, 0.65, 1.0, color=col, alpha=1.0)
+        ax.fill_between(theta, 0.7, 1.0, color=col, alpha=0.9)
 
+    # Needle
     angle = np.pi * prob
     ax.annotate("", xy=(angle, 0.85), xytext=(0, 0),
-                arrowprops=dict(arrowstyle="-|>", color="white", lw=2.5))
+                 arrowprops=dict(arrowstyle="-|>", color="black", lw=2))
 
     ax.set_ylim(0, 1)
     ax.set_axis_off()
-    fig.subplots_adjust(left=0.05, right=0.95, top=1.05, bottom=-0.45) 
+    ax.set_title(f"Default Probability: {prob*100:.1f}%", fontsize=11, fontweight='bold', pad=2)
     fig.patch.set_alpha(0)
     return fig
 
@@ -125,7 +128,6 @@ def gauge_chart(prob: float):
 st.sidebar.image("https://img.icons8.com/color/96/bank-card-back-side.png", width=80)
 st.sidebar.title("COM763 – Credit Risk\nPredictor")
 st.sidebar.markdown("**Module:** Advanced Machine Learning  \n**Model:** Calibrated Stacking Ensemble")
-st.sidebar.markdown("**By:** Buwaneka Ranatunge")
 st.sidebar.divider()
 
 page = st.sidebar.radio("Navigation", ["🔮 Predict", "📊 Model Performance", "ℹ️ About"])
@@ -208,18 +210,14 @@ if page == "🔮 Predict":
         st.divider()
         st.subheader("📋 Risk Assessment Result")
 
-        # Gauge
-        g1, g2, g3 = st.columns([1.5, 1, 1.5])
-        with g2:
-            st.pyplot(gauge_chart(prob), use_container_width=True)
-
-        st.markdown(f'<div class="{tier_css}">{tier_label}</div>', unsafe_allow_html=True)
-        st.markdown(
-            f"<p style='text-align:center; font-size:18px; margin-top:8px;'>"
-            f"Default Probability: <strong>{prob*100:.1f}%</strong> "
-            f"({(prob-0.221)*100:+.1f}% vs 22.1% dataset baseline)</p>",
-            unsafe_allow_html=True
-        )
+        res_col1, res_col2 = st.columns([1, 1])
+        with res_col1:
+            st.markdown(f'<div class="{tier_css}">{tier_label}</div>', unsafe_allow_html=True)
+            st.metric("Default Probability", f"{prob*100:.1f}%",
+                      delta=f"{(prob-0.221)*100:+.1f}% vs avg baseline",
+                      delta_color="inverse")
+        with res_col2:
+            st.pyplot(gauge_chart(prob))
 
         # ── Engineered Feature Summary ──────────────────────────────────────
         st.subheader("🔧 Engineered Feature Insights")
