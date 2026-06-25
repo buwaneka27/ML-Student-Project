@@ -20,7 +20,7 @@ import os
 # Page Configuration
 # ─────────────────────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="Credit Risk Predictor – COM763",
+    page_title="Credit Risk Predictor",
     page_icon="💳",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -123,8 +123,8 @@ def gauge_chart(prob: float):
 # Sidebar – Navigation
 # ─────────────────────────────────────────────────────────────────────────────
 st.sidebar.image("https://img.icons8.com/color/96/bank-card-back-side.png", width=80)
-st.sidebar.title("COM763 – Credit Risk\nPredictor")
-st.sidebar.markdown("**Module:** Advanced Machine Learning  \n**Model:** Calibrated Stacking Ensemble")
+st.sidebar.title("Credit Risk Predictor")
+st.sidebar.markdown("**Model:** Calibrated Stacking Ensemble")
 st.sidebar.markdown("**By:** Buwaneka Ranatunge")
 st.sidebar.divider()
 
