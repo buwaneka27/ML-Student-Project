@@ -100,10 +100,10 @@ def gauge_chart(prob: float):
     ax.set_theta_direction(-1)
 
     segments = [
-        (0,          np.pi*0.50, '#2CAB4A'),  # Low
-        (np.pi*0.50, np.pi*0.75, '#FFCA22'),  # Medium
-        (np.pi*0.75, np.pi*0.90, '#FD384A'),  # High
-        (np.pi*0.90, np.pi,      '#9C000F'),  # Critical
+        (0,          np.pi*0.50, '#2CAB4A'), # Low
+        (np.pi*0.50, np.pi*0.75, '#FFCA22'), # Medium
+        (np.pi*0.75, np.pi*0.90, '#FD384A'), # High
+        (np.pi*0.90, np.pi,      '#9C000F'), # Very High
     ]
     for start, end, col in segments:
         theta = np.linspace(start, end, 50)
@@ -115,7 +115,7 @@ def gauge_chart(prob: float):
 
     ax.set_ylim(0, 1)
     ax.set_axis_off()
-    fig.patch.set_facecolor('none')
+    fig.subplots_adjust(left=0.05, right=0.95, top=1.05, bottom=-0.45) 
     fig.patch.set_alpha(0)
     return fig
 
