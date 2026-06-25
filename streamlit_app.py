@@ -118,7 +118,6 @@ def gauge_chart(prob: float):
 
     ax.set_ylim(0, 1)
     ax.set_axis_off()
-    ax.set_title(f"Default Probability: {prob*100:.1f}%", fontsize=11, fontweight='bold', pad=2)
     fig.patch.set_alpha(0)
     return fig
 
