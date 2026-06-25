@@ -102,10 +102,10 @@ def gauge_chart(prob: float):
 
     # Background segments
     segments = [
-        (0, np.pi*0.5,  '#d4edda'),
-        (np.pi*0.5, np.pi*0.75, '#fff3cd'),
-        (np.pi*0.75, np.pi*0.9, '#f8d7da'),
-        (np.pi*0.9, np.pi,     '#721c24'),
+        (0, np.pi*0.5,  '#2CAB4A'),
+        (np.pi*0.5, np.pi*0.75, '#FFCA22'),
+        (np.pi*0.75, np.pi*0.9, '#FD384A'),
+        (np.pi*0.9, np.pi,     '#9C000F'),
     ]
     for start, end, col in segments:
         theta = np.linspace(start, end, 50)
@@ -128,6 +128,7 @@ def gauge_chart(prob: float):
 st.sidebar.image("https://img.icons8.com/color/96/bank-card-back-side.png", width=80)
 st.sidebar.title("COM763 – Credit Risk\nPredictor")
 st.sidebar.markdown("**Module:** Advanced Machine Learning  \n**Model:** Calibrated Stacking Ensemble")
+st.sidebar.markdown("**By:** Buwaneka Ranatunge")
 st.sidebar.divider()
 
 page = st.sidebar.radio("Navigation", ["🔮 Predict", "📊 Model Performance", "ℹ️ About"])
