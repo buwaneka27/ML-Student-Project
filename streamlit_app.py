@@ -96,7 +96,7 @@ def build_feature_vector(inputs: dict) -> pd.DataFrame:
 
 def gauge_chart(prob: float):
     """Draw a simple gauge chart for the default probability."""
-    fig, ax = plt.subplots(figsize=(4, 2.2), subplot_kw=dict(polar=True))
+    fig, ax = plt.subplots(figsize=(4, 2), subplot_kw=dict(polar=True))
     ax.set_theta_zero_location("W")
     ax.set_theta_direction(-1)
 
