@@ -330,7 +330,7 @@ elif page == "ℹ️ About":
     - **LIMIT_AGE_RATIO** – credit limit normalised by age
 
     ### Performance (Test Set – 25% holdout)
-    - **AUC-ROC:** 0.7530 | **F1:** 0.5081 | **Recall:** 49.13% | **Precision:** 52.61% | **Accuracy:** 78.96%
+    - **AUC-ROC:** 0.7530 | **F1:** 0.5081 | **Recall:** 0.4913 | **Precision:** 0.5261 | **Accuracy:** 0.7896
     - 5-Fold CV AUC: 0.9090 ± 0.0058 (on SMOTE-balanced folds)
 
     ### Limitations & Responsible Use
