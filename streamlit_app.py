@@ -329,12 +329,12 @@ elif page == "ℹ️ About":
     - **MAX_DELAY** – worst single-month delay
     - **LIMIT_AGE_RATIO** – credit limit normalised by age
 
-    ### Performance (Test Set – 25% holdout)
+    ### Performance
     - **AUC-ROC:** 0.7530 | **F1:** 0.5081 | **Recall:** 0.4913 | **Precision:** 0.5261 | **Accuracy:** 0.7896
     - 5-Fold CV AUC: 0.9090 ± 0.0058 (on SMOTE-balanced folds)
 
     ### Limitations & Responsible Use
-    - Trained on 2005 Taiwan data — may not generalise to other markets or time periods
+    - Trained on 2005 Taiwan data - may not generalise to other markets or time periods
     - SHAP explanations are local approximations, not causal
     - Must not be used as the sole basis for credit decisions (regulatory compliance required)
     - Potential bias: education and gender are included as features
