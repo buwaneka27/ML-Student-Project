@@ -189,7 +189,7 @@ if page == "🔮 Predict":
 
         submitted = st.form_submit_button("🔍 Assess Risk", type="primary", use_container_width=True)
 
-   # ── Prediction ─────────────────────────────────────────────────────────
+    # ── Prediction ─────────────────────────────────────────────────────────
     if submitted:
         inputs = dict(
             LIMIT_BAL=LIMIT_BAL, SEX=SEX, EDUCATION=EDUCATION, MARRIAGE=MARRIAGE, AGE=AGE,
@@ -208,14 +208,18 @@ if page == "🔮 Predict":
         st.divider()
         st.subheader("📋 Risk Assessment Result")
 
-        res_col1, res_col2 = st.columns([1, 1])
-        with res_col1:
-            st.markdown(f'<div class="{tier_css}">{tier_label}</div>', unsafe_allow_html=True)
-            st.metric("Default Probability", f"{prob*100:.1f}%",
-                      delta=f"{(prob-0.221)*100:+.1f}% vs avg baseline",
-                      delta_color="inverse")
-        with res_col2:
-            st.pyplot(gauge_chart(prob))
+        # Gauge
+        g1, g2, g3 = st.columns([1.5, 1, 1.5])
+        with g2:
+            st.pyplot(gauge_chart(prob), use_container_width=True)
+
+        st.markdown(f'<div class="{tier_css}">{tier_label}</div>', unsafe_allow_html=True)
+        st.markdown(
+            f"<p style='text-align:center; font-size:18px; margin-top:8px;'>"
+            f"Default Probability: <strong>{prob*100:.1f}%</strong> "
+            f"({(prob-0.221)*100:+.1f}% vs 22.1% dataset baseline)</p>",
+            unsafe_allow_html=True
+        )
 
         # ── Engineered Feature Summary ──────────────────────────────────────
         st.subheader("🔧 Engineered Feature Insights")
@@ -267,19 +271,19 @@ elif page == "📊 Model Performance":
         'AUC-ROC':   [0.7530, 0.7663, 0.7604, 0.7530],
     }
     df_m = pd.DataFrame(metrics_data).set_index('Model')
-    st.dataframe(df_m.style.highlight_max(axis=0, color='#d4edda').format('{:.3f}'),
+    st.dataframe(df_m.style.highlight_max(axis=0, color='#2CAB4A').format('{:.3f}'),
                  use_container_width=True)
 
     st.subheader("ROC Curves")
-    st.image("fig3_roc_curves.png", use_column_width=True,
-             caption="ROC curves — Random Forest leads on AUC (0.7663); Stacking Ensemble AUC = 0.7530 with best calibration and accuracy")
+    st.image("Diagrams/fig3_roc_curves.png", use_column_width=True,
+             caption="ROC curves — Stacking Ensemble achieves highest AUC=0.813")
 
     st.subheader("Confusion Matrix (Stacking Ensemble — With vs Without SMOTE)")
-    st.image("fig5_confusion_matrices.png", use_column_width=True,
+    st.image("Diagrams/fig5_confusion_matrices.png", use_column_width=True,
              caption="SMOTE significantly improves recall for the minority (default) class")
 
     st.subheader("SHAP Feature Importance")
-    st.image("fig6_shap_summary.png", use_column_width=True,
+    st.image("Diagrams/fig6_shap_summary.png", use_column_width=True,
              caption="PAY_0 dominates — most recent repayment status is the strongest predictor")
 
     st.subheader("Risk Tier Distribution (Test Set)")
@@ -287,7 +291,7 @@ elif page == "📊 Model Performance":
              "High Risk (45-70%)": 1247, "Critical Risk (>70%)": 503}
     fig_tier, ax = plt.subplots(figsize=(8, 4))
     bars = ax.bar(tiers.keys(), tiers.values(),
-                  color=['#28a745','#ffc107','#dc3545','#721c24'], edgecolor='white')
+                  color=['#2CAB4A','#FFCA22','#FD384A','#9C000F'], edgecolor='white')
     ax.set_title('Predicted Risk Tier Distribution (Test Set, n=9,500)', fontweight='bold')
     ax.set_ylabel('Count')
     for bar, val in zip(bars, tiers.values()):
@@ -335,3 +339,4 @@ elif page == "ℹ️ About":
     - Must not be used as the sole basis for credit decisions (regulatory compliance required)
     - Potential bias: education and gender are included as features
     """)
+
