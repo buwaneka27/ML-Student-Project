@@ -1,3 +1,5 @@
-Model Proof
+## Model Proof Video
 
-![images alt](https://github.com/buwaneka27/ML-Student-Project/blob/27d3ec655758259d83af7462c97d944cbd0c59bd/Model_Proof.png)
+**Please click on the image to play the video.**
+
+[![Model Proof Preview](https://github.com/buwaneka27/ML-Student-Project/blob/481627ec62d1fa68d4877ca30cdd057a230de6de/Model%20Proof/Model_Video_Thumbnail.png)](https://youtu.be/zn5j4HIzjCY)
