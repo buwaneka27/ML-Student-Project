@@ -1,6 +1,7 @@
 """
 COM763 Advanced Machine Learning – Portfolio Task 1
 Calibrated Stacking Ensemble with SHAP-Driven Feature Analysis for Credit Default Risk Prediction
+Unique Approach: Stacking Ensemble (LR + RF + XGBoost) with calibrated probability outputs, SHAP-based explainability, and a custom 4-tier risk scoring system.
 
 - Student Name: Buwaneka Ranatunge
 - Sudent No: S25021289
@@ -188,7 +189,7 @@ if page == "🔮 Predict":
 
         submitted = st.form_submit_button("🔍 Assess Risk", type="primary", use_container_width=True)
 
-    # ── Prediction ─────────────────────────────────────────────────────────
+   # ── Prediction ─────────────────────────────────────────────────────────
     if submitted:
         inputs = dict(
             LIMIT_BAL=LIMIT_BAL, SEX=SEX, EDUCATION=EDUCATION, MARRIAGE=MARRIAGE, AGE=AGE,
@@ -207,18 +208,14 @@ if page == "🔮 Predict":
         st.divider()
         st.subheader("📋 Risk Assessment Result")
 
-        # Gauge
-        g1, g2, g3 = st.columns([1.5, 1, 1.5])
-        with g2:
-            st.pyplot(gauge_chart(prob), use_container_width=True)
-
-        st.markdown(f'<div class="{tier_css}">{tier_label}</div>', unsafe_allow_html=True)
-        st.markdown(
-            f"<p style='text-align:center; font-size:18px; margin-top:8px;'>"
-            f"Default Probability: <strong>{prob*100:.1f}%</strong> "
-            f"({(prob-0.221)*100:+.1f}% vs 22.1% dataset baseline)</p>",
-            unsafe_allow_html=True
-        )
+        res_col1, res_col2 = st.columns([1, 1])
+        with res_col1:
+            st.markdown(f'<div class="{tier_css}">{tier_label}</div>', unsafe_allow_html=True)
+            st.metric("Default Probability", f"{prob*100:.1f}%",
+                      delta=f"{(prob-0.221)*100:+.1f}% vs avg baseline",
+                      delta_color="inverse")
+        with res_col2:
+            st.pyplot(gauge_chart(prob))
 
         # ── Engineered Feature Summary ──────────────────────────────────────
         st.subheader("🔧 Engineered Feature Insights")
@@ -263,26 +260,26 @@ elif page == "📊 Model Performance":
     st.subheader("Evaluation Metrics – All Models")
     metrics_data = {
         'Model':     ['Logistic Regression','Random Forest','XGBoost','Stacking Ensemble ★'],
-        'Accuracy':  [0.818, 0.826, 0.831, 0.838],
-        'Precision': [0.652, 0.681, 0.697, 0.714],
-        'Recall':    [0.521, 0.573, 0.604, 0.638],
-        'F1-Score':  [0.579, 0.622, 0.648, 0.674],
-        'AUC-ROC':   [0.731, 0.779, 0.792, 0.813],
+        'Accuracy':  [0.7439, 0.7679, 0.6199, 0.7896],
+        'Precision': [0.4416, 0.4798, 0.3391, 0.5261],
+        'Recall':    [0.5967, 0.5859, 0.7571, 0.4913],
+        'F1-Score':  [0.5076, 0.5275, 0.4684, 0.5081],
+        'AUC-ROC':   [0.7530, 0.7663, 0.7604, 0.7530],
     }
     df_m = pd.DataFrame(metrics_data).set_index('Model')
-    st.dataframe(df_m.style.highlight_max(axis=0, color='#2CAB4A').format('{:.3f}'),
+    st.dataframe(df_m.style.highlight_max(axis=0, color='#d4edda').format('{:.3f}'),
                  use_container_width=True)
 
     st.subheader("ROC Curves")
-    st.image("Diagrams/fig3_roc_curves.png", use_column_width=True,
-             caption="ROC curves — Stacking Ensemble achieves highest AUC=0.813")
+    st.image("fig3_roc_curves.png", use_column_width=True,
+             caption="ROC curves — Random Forest leads on AUC (0.7663); Stacking Ensemble AUC = 0.7530 with best calibration and accuracy")
 
     st.subheader("Confusion Matrix (Stacking Ensemble — With vs Without SMOTE)")
-    st.image("Diagrams/fig5_confusion_matrices.png", use_column_width=True,
+    st.image("fig5_confusion_matrices.png", use_column_width=True,
              caption="SMOTE significantly improves recall for the minority (default) class")
 
     st.subheader("SHAP Feature Importance")
-    st.image("Diagrams/fig6_shap_summary.png", use_column_width=True,
+    st.image("fig6_shap_summary.png", use_column_width=True,
              caption="PAY_0 dominates — most recent repayment status is the strongest predictor")
 
     st.subheader("Risk Tier Distribution (Test Set)")
@@ -290,7 +287,7 @@ elif page == "📊 Model Performance":
              "High Risk (45-70%)": 1247, "Critical Risk (>70%)": 503}
     fig_tier, ax = plt.subplots(figsize=(8, 4))
     bars = ax.bar(tiers.keys(), tiers.values(),
-                  color=['#2CAB4A','#FFCA22','#FD384A','#9C000F'], edgecolor='white')
+                  color=['#28a745','#ffc107','#dc3545','#721c24'], edgecolor='white')
     ax.set_title('Predicted Risk Tier Distribution (Test Set, n=9,500)', fontweight='bold')
     ax.set_ylabel('Count')
     for bar, val in zip(bars, tiers.values()):
@@ -329,8 +326,8 @@ elif page == "ℹ️ About":
     - **LIMIT_AGE_RATIO** – credit limit normalised by age
 
     ### Performance (Test Set – 25% holdout)
-    - **AUC-ROC:** 0.813 | **F1:** 0.674 | **Recall:** 63.8% | **Precision:** 71.4%
-    - 5-Fold CV AUC: 0.808 ± 0.004
+    - **AUC-ROC:** 0.7530 | **F1:** 0.5081 | **Recall:** 49.13% | **Precision:** 52.61% | **Accuracy:** 78.96%
+    - 5-Fold CV AUC: 0.9090 ± 0.0058 (on SMOTE-balanced folds)
 
     ### Limitations & Responsible Use
     - Trained on 2005 Taiwan data — may not generalise to other markets or time periods
