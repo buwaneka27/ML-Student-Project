@@ -1,5 +1,4 @@
-## Model Proof Video
+## ▶️ Model Proof Video
 
-**Please click on the image to play the video.**
+https://github.com/user-attachments/assets/9f55c3de-bd6a-42bb-b545-30cd8fe575df
 
-[![Model Proof Preview](https://github.com/buwaneka27/ML-Student-Project/blob/481627ec62d1fa68d4877ca30cdd057a230de6de/Model%20Proof/Model_Video_Thumbnail.png)](https://youtu.be/zn5j4HIzjCY)
