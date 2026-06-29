@@ -163,11 +163,11 @@ if page == "🔮 Predict":
         st.subheader("📅 Payment History (0=on time, positive=months delayed)")
         pc1, pc2, pc3, pc4, pc5, pc6 = st.columns(6)
         PAY_0 = pc1.selectbox("Sep (PAY_0)", list(range(-1,9)), index=1)
-        PAY_2 = pc2.selectbox("Aug (PAY_2)", list(range(-1,9)), index=0)
-        PAY_3 = pc3.selectbox("Jul (PAY_3)", list(range(-1,9)), index=0)
-        PAY_4 = pc4.selectbox("Jun (PAY_4)", list(range(-1,9)), index=0)
-        PAY_5 = pc5.selectbox("May (PAY_5)", list(range(-1,9)), index=0)
-        PAY_6 = pc6.selectbox("Apr (PAY_6)", list(range(-1,9)), index=0)
+        PAY_2 = pc2.selectbox("Aug (PAY_2)", list(range(-1,9)), index=1)
+        PAY_3 = pc3.selectbox("Jul (PAY_3)", list(range(-1,9)), index=1)
+        PAY_4 = pc4.selectbox("Jun (PAY_4)", list(range(-1,9)), index=1)
+        PAY_5 = pc5.selectbox("May (PAY_5)", list(range(-1,9)), index=1)
+        PAY_6 = pc6.selectbox("Apr (PAY_6)", list(range(-1,9)), index=1)
 
         st.subheader("💰 Bill Amounts (NTD)")
         bc1, bc2, bc3, bc4, bc5, bc6 = st.columns(6)
@@ -276,7 +276,7 @@ elif page == "📊 Model Performance":
 
     st.subheader("ROC Curves")
     st.image("Diagrams/fig3_roc_curves.png", use_column_width=True,
-             caption="ROC curves — Stacking Ensemble achieves highest AUC=0.813")
+             caption="ROC curves — Random Forest leads on AUC (0.7663); Stacking Ensemble AUC = 0.7530 with best calibration and accuracy")
 
     st.subheader("Confusion Matrix (Stacking Ensemble — With vs Without SMOTE)")
     st.image("Diagrams/fig5_confusion_matrices.png", use_column_width=True,
@@ -339,4 +339,3 @@ elif page == "ℹ️ About":
     - Must not be used as the sole basis for credit decisions (regulatory compliance required)
     - Potential bias: education and gender are included as features
     """)
-
