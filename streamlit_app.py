@@ -21,7 +21,7 @@ import os
 # Page Configuration
 # ─────────────────────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="Credit Risk Predictor",
+    page_title="Credit Default Risk Predictor",
     page_icon="💳",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -124,7 +124,7 @@ def gauge_chart(prob: float):
 # Sidebar – Navigation
 # ─────────────────────────────────────────────────────────────────────────────
 st.sidebar.image("https://img.icons8.com/color/96/bank-card-back-side.png", width=80)
-st.sidebar.title("Credit Risk Predictor")
+st.sidebar.title("Credit Default Risk Predictor")
 st.sidebar.markdown("**Model:** Calibrated Stacking Ensemble \n **By:** Buwaneka Ranatunge")
 st.sidebar.divider()
 
